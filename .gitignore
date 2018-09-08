@@ -1,0 +1,5 @@
+Product/Product-Service/node_modules/*
+Product/Product-Service/coverage/*
+Product/Product-Service/npm-debug.log
+hooks/*
+
