@@ -37,6 +37,6 @@ class CustomerRepository {
     }
 }
  
-const CustomerRepository = new CustomerRepository();
+const customerRepository = new CustomerRepository();
  
 module.exports = CustomerRepository;
