@@ -8,7 +8,6 @@ class Customer {
         this.emailAddress = emailAddress;
         this.dateOfBirth = dateOfBirth;
         this.address = address
-
     }
 }
  
