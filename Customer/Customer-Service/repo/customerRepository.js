@@ -13,25 +13,25 @@ class CustomerRepository {
     }
  
     getById(id) {
-        return this.Customers.get(id);
+        return this.customers.get(id);
     }
  
     getAll() {
-        return Array.from(this.Customers.values());
+        return Array.from(this.customers.values());
     }
  
     remove() {
-        const keys = Array.from(this.Customers.keys());
-        this.Customers.delete(keys[keys.length - 1]);
+        const keys = Array.from(this.customers.keys());
+        this.customers.delete(keys[keys.length - 1]);
     }
  
     save(Customer) {
         if (this.getById(Customer.id) !== undefined) {
-            this.Customers[Customer.id] = Customer;
+            this.customers[Customer.id] = Customer;
             return "Updated Customer with id=" + Customer.id;
         }
         else {
-            this.Customers.set(Customer.id, Customer);
+            this.customers.set(Customer.id, Customer);
             return "Added Customer with id=" + Customer.id;
         }
     }

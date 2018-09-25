@@ -1,7 +1,7 @@
 {
-  "name": "product",
+  "name": "customer",
   "version": "1.0.0",
-  "description": "Product Service",
+  "description": "Customer Service",
   "main": "app.js",
   "scripts": {
     "start": "node app.js",
