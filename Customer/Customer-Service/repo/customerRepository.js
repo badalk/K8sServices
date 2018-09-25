@@ -39,4 +39,4 @@ class CustomerRepository {
  
 const customerRepository = new CustomerRepository();
  
-module.exports = CustomerRepository;
+module.exports = customerRepository;
