@@ -17,7 +17,6 @@ roleRef:
  apiGroup: rbac.authorization.k8s.io
  kind: Role
  name: customer-service-admins
- namespace: customer
 subjects:
 - apiGroup: rbac.authorization.k8s.io
   kind: Group
