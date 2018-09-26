@@ -23,9 +23,10 @@
 // 3
 // ##
 
-const express = require('express');
-const app = new express();
-const bodyParser = require('body-parser');
+var express = require('express'), 
+    app = new express(),
+    port = process.env.PORT || 3000,
+    bodyParser = require('body-parser');
  
 // register JSON parser middlewear
 app.use(bodyParser.json());
@@ -33,6 +34,6 @@ var custRoutes =  require('./routes/customerRoutes');
 console.log(custRoutes);
 custRoutes(app);
  
-app.listen(3000, () => {
+app.listen(port, () => {
     console.log("Server is up!");
 });
