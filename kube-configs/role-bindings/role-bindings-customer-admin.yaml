@@ -12,10 +12,12 @@ apiVersion: rbac.authorization.k8s.io/v1
 kind: RoleBinding
 metadata:
  name: myfirstakscluster-customer-service-admins
+ namespace: customer
 roleRef:
  apiGroup: rbac.authorization.k8s.io
  kind: Role
  name: customer-service-admins
+ namespace: customer
 subjects:
 - apiGroup: rbac.authorization.k8s.io
   kind: Group

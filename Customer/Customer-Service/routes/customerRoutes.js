@@ -28,7 +28,7 @@ const getcustomerRoutes = (app) => {
             res.send(result);
         });
  
-    app.use('/customer', router);
+    app.use(router);
 };
  
 module.exports = getcustomerRoutes;
