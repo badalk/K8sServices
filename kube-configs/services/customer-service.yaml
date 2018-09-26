@@ -14,12 +14,14 @@ spec:
     metadata:
       labels:
         app: customer-service
+        namespace: customer
     spec:
       containers:
       - name: customer-service
         image: badalacr.azurecr.io/customer-service:v1
         ports:
         - containerPort: 80
+          protocol: TCP
         resources:
           requests:
             cpu: 250m
@@ -35,5 +37,7 @@ spec:
   type: LoadBalancer
   ports:
   - port: 80
+    protocol: TCP
+    targetPort: 80
   selector:
     app: customer-service
