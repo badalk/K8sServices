@@ -1,10 +1,10 @@
 'use strict';
  
-const Router = require('express');
-const customerRepo = require('../repo/customerRepository');
+var express = require('express');
+var customerRepo = require('../repo/customerRepository');
  
 const getcustomerRoutes = (app) => {
-    const router = new Router();
+    const router = express.Router();
  
     router
         .get('/get/:id', (req, res) => {

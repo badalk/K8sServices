@@ -14,12 +14,18 @@ spec:
     metadata:
       labels:
         app: product-service
+        namespace: product
     spec:
       containers:
       - name: product-service
         image: badalacr.azurecr.io/product-service:v1
         ports:
-        - containerPort: 80
+        - name: product-service-web
+          containerPort: 80
+          protocol: TCP
+        - name: product-service-secure-web
+          containerPort: 443
+          protocol:  TCP
         resources:
           requests:
             cpu: 250m
@@ -35,5 +41,10 @@ spec:
   type: LoadBalancer
   ports:
   - port: 80
+    targetPort: product-service-web
+    protocol: TCP
+  - port: 443
+    targetPort: product-service-secure-web
+    protocol: TCP
   selector:
     app: product-service
