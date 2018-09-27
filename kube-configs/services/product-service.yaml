@@ -40,10 +40,12 @@ metadata:
 spec:
   type: LoadBalancer
   ports:
-  - port: 80
+  - name: tcp-80
+    port: 80
     targetPort: prod-web
     protocol: TCP
-  - port: 443
+  - name: tcp-443
+    port: 443
     targetPort: prod-secure-web
     protocol: TCP
   selector:
