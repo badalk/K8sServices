@@ -20,10 +20,10 @@ spec:
       - name: product-service
         image: badalacr.azurecr.io/product-service:v1
         ports:
-        - name: product-service-web
+        - name: prod-web
           containerPort: 80
           protocol: TCP
-        - name: product-service-secure-web
+        - name: prod-secure-web
           containerPort: 443
           protocol:  TCP
         resources:
@@ -41,10 +41,10 @@ spec:
   type: LoadBalancer
   ports:
   - port: 80
-    targetPort: product-service-web
+    targetPort: prod-web
     protocol: TCP
   - port: 443
-    targetPort: product-service-secure-web
+    targetPort: prod-secure-web
     protocol: TCP
   selector:
     app: product-service
