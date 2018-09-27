@@ -33,7 +33,11 @@ app.use(bodyParser.json());
 var custRoutes =  require('./routes/customerRoutes');
 console.log(custRoutes);
 custRoutes(app);
- 
-app.listen(port, () => {
-    console.log("Server is up!");
+
+//Start the web server and listen for requests
+var server = app.listen(port, function () {
+	var host = server.address().address
+	var port = server.address().port
+	
+	console.log("Customer service listening at http://%s:%s", host, port)
 });
