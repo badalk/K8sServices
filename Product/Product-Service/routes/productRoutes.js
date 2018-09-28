@@ -28,7 +28,7 @@ const getproductRoutes = (app) => {
             res.send(result);
         });
  
-    app.use('/product', router);
+    app.use(router);
 };
  
 module.exports = getproductRoutes;
