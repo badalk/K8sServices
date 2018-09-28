@@ -38,8 +38,7 @@ metadata:
   name: product-service
   namespace: product
 spec:
-  type: LoadBalancer
-  loadBalancerIP: 104.46.96.249
+  type: ClusterIP
   ports:
   - name: tcp-80
     port: 80
