@@ -39,6 +39,7 @@ metadata:
   namespace: product
 spec:
   type: LoadBalancer
+  loadBalancerIP: 104.46.96.249
   ports:
   - name: tcp-80
     port: 80
