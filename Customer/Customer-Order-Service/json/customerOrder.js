@@ -7,7 +7,7 @@ class CustomerOrder {
         this.productId = productId;
         this.quantity = quantity;
         this.unitPrice = unitPrice;
-        this.orderDate = orderDate;
+        this.orderDate = orderDate
     }
 }
  
