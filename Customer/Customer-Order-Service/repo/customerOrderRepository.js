@@ -5,16 +5,16 @@ const CustomerOrder = require('../json/customerOrder');
 class CustomerOrderRepository {
     constructor() {
         this.customerOrders = new Map([
-            // [1, new CustomerOrder(orderId=1, customerId=1, productId=1, quantity=5, unitPrice=15, new Date(year=2018, month=9, date=1) )],
+            // [1, new CustomerOrder(orderId=1, customerId=1, productId=1, quantity=5, unitPrice=15, new Date(2018, 9, 1) )],
 
-            [1, new CustomerOrder(1, 1, 1, 5, 15, new Date(year=2018, month=9, date=1) )],
-            [2, new CustomerOrder(1, 1, 2, 10, 10, new Date(year=2018, month=9, date=1) )],
-            [3, new CustomerOrder(2, 2, 1, 5, 15, new Date(year=2018, month=7, date=10) )],
-            [4, new CustomerOrder(2, 2, 3, 5, 23, new Date(year=2018, month=7, date=10) )],
-            [5, new CustomerOrder(2, 2, 4, 5, 32, new Date(year=2018, month=7, date=10) )],
-            [6, new CustomerOrder(3, 2, 2, 5, 10, new Date(year=2018, month=5, date=13) )],
-            [7, new CustomerOrder(4, 3, 3, 5, 23, new Date(year=2018, month=9, date=28) )],
-            [8, new CustomerOrder(4, 3, 4, 5, 35, new Date(year=2018, month=9, date=28) )]
+            [1, new CustomerOrder(1, 1, 1, 5, 15, new Date(2018, 9, 1) )],
+            [2, new CustomerOrder(1, 1, 2, 10, 10, new Date(2018, 9, 1) )],
+            [3, new CustomerOrder(2, 2, 1, 5, 15, new Date(2018, 7, 10) )],
+            [4, new CustomerOrder(2, 2, 3, 5, 23, new Date(2018, 7, 10) )],
+            [5, new CustomerOrder(2, 2, 4, 5, 32, new Date(2018, 7, 10) )],
+            [6, new CustomerOrder(3, 2, 2, 5, 10, new Date(2018, 5, 13) )],
+            [7, new CustomerOrder(4, 3, 3, 5, 23, new Date(2018, 9, 28) )],
+            [8, new CustomerOrder(4, 3, 4, 5, 35, new Date(2018, 9, 28) )]
         ]);
     }
  
