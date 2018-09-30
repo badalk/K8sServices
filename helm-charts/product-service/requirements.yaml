@@ -1,0 +1,9 @@
+# In Helm, one chart may depend on any number of other charts. 
+# These dependencies can be dynamically linked through the requirements.yaml file or brought in to the charts/ directory and managed manually.
+# dependencies:
+#   - name: apache
+#     version: 1.2.3
+#     repository: http://example.com/charts #full url to the chart repository
+#   - name: mysql
+#     version: 3.2.1
+#     repository: http://another.example.com/charts #full url to the chart repository
