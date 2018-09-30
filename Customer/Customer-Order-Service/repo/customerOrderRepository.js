@@ -1,6 +1,6 @@
 'use strict';
  
-const Customer = require('../json/customer');
+const Customer = require('../json/customerOrder');
  
 class CustomerOrderRepository {
     constructor() {
