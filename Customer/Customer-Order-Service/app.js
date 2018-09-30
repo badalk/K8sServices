@@ -9,7 +9,7 @@ var express = require('express'),
 app.use(bodyParser.json());
 var custOrderRoutes =  require('./routes/customerOrderRoutes');
 console.log(custOrderRoutes);
-custRoutes(app);
+custOrderRoutes(app);
 
 //Start the web server and listen for requests
 var server = app.listen(port, function () {
