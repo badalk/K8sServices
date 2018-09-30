@@ -30,12 +30,11 @@ spec:
 ---
 apiVersion: v1
 kind: Service
-
 metadata:
   name: customer-order-service
   namespace: customer
   annotations:
-    service.beta.kubernetes.io/azure-load-load-balancer-internal: "true"
+    service.beta.kubernetes.io/azure-load-balancer-internal: "true"
 spec:
   type: LoadBalancer
   ports:
