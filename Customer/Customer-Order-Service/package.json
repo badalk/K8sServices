@@ -1,7 +1,7 @@
 {
-  "name": "customer",
+  "name": "customerorder",
   "version": "1.0.0",
-  "description": "Customer Service",
+  "description": "Customer Order Service",
   "main": "app.js",
   "scripts": {
     "start": "node app.js",
