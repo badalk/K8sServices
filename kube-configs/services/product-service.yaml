@@ -4,7 +4,7 @@ metadata:
   name: product-service
   namespace: product
 spec:
-  type: LoadBalancer
+  type: ClusterIP
   ports:
   - name: tcp-80
     port: 80
@@ -47,6 +47,6 @@ spec:
           protocol:  TCP
         resources:
           requests:
-            cpu: 250m
+            cpu: 100m
           limits:
-            cpu: 500m
+            cpu: 200m

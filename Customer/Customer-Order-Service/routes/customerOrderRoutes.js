@@ -8,7 +8,7 @@ const getcustomerOrderRoutes = (app) => {
  
     router
         .get('/get/:orderId', (req, res) => {
-            const id = parseInt(req.params.orderId);
+            const orderId = parseInt(req.params.orderId);
             const result = customerOrderRepo.getById(orderId);
             res.send(result);
         })
