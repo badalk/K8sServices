@@ -4,16 +4,15 @@ metadata:
   name: customer-service
   namespace: customer
 spec:
-  type: LoadBalancer
-  loadBalancerIP: 104.46.96.249
+  type: ClusterIP
   ports:
   - name: tcp-80
     port: 80
-    targetPort: customer-web
+    targetPort: cust-web
     protocol: TCP
   - name: tcp-443
     port: 443
-    targetPort: customer-secure-web
+    targetPort: cust-sec-web
     protocol: TCP
   selector:
     app: customer-service
@@ -40,10 +39,10 @@ spec:
       - name: customer-service
         image: badalacr.azurecr.io/customer-service:v1
         ports:
-        - name: cusomer-web
+        - name: cust-web
           containerPort: 80
           protocol: TCP
-        - name: customer-secure-web
+        - name: cust-sec-web
           containerPort: 443
           protocol:  TCP
         resources:
