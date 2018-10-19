@@ -38,6 +38,7 @@ spec:
       containers:
       - name: product-service
         image: badalacr.azurecr.io/product-service:v1
+        imagePullPolicy: Always
         ports:
         - name: prod-web
           containerPort: 80

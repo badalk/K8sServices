@@ -13,4 +13,4 @@ metadata:
  name: az-kvreader-identity-binding
 spec:
  AzureIdentity: az-kvreader-identity
- Selector: <label value to match in your app>
+ Selector: customer-service
