@@ -20,7 +20,7 @@ spec:
       options:
         usepodidentity: "true"         # [OPTIONAL] if not provided, will default to "false"
         keyvaultname: "aks-sp-key-secret-vault"               # the name of the KeyVault
-        keyvaultobjectnames: ""        # list of KeyVault object names (semi-colon separated)
+        keyvaultobjectnames: "secret"        # list of KeyVault object names (semi-colon separated)
         keyvaultobjecttypes: "secret"    # list of KeyVault object types: secret, key or cert (semi-colon separated)
         keyvaultobjectversions: ""     # [OPTIONAL] list of KeyVault object versions (semi-colon separated), will get latest if empty
         resourcegroup: "rg-secrets"              # the resource group of the KeyVault
