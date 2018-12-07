@@ -20,9 +20,9 @@ spec:
       options:
         usepodidentity: "true"         # [OPTIONAL] if not provided, will default to "false"
         keyvaultname: "aks-sp-key-secret-vault"               # the name of the KeyVault
-        keyvaultobjectnames: "sqlpwd"        # list of KeyVault object names (semi-colon separated)
+        keyvaultobjectnames: "sqlpwd;sqluser;az-aks-arm-sp-secret"        # list of KeyVault object names (semi-colon separated)
         keyvaultobjecttypes: secret    # list of KeyVault object types: secret, key or cert (semi-colon separated)
-        keyvaultobjectversions: "237851d935e24ac8b63abb1b41a01854"     # [OPTIONAL] list of KeyVault object versions (semi-colon separated), will get latest if empty
+        keyvaultobjectversions: "237851d935e24ac8b63abb1b41a01854;d9acf08f9a1243dbae8f9e85e5cbf573;3fd8702bf4114c5a805f62e914eac823"     # [OPTIONAL] list of KeyVault object versions (semi-colon separated), will get latest if empty
         resourcegroup: "rg-secrets"              # the resource group of the KeyVault
         subscriptionid: "4dfeb08c-7e41-40af-a9fa-fabcac401c2d"             # the subscription ID of the KeyVault
         tenantid: "b25fcb44-9c49-413c-9fdc-b59b39447b84"                   # the tenant ID of the KeyVaultjyh
