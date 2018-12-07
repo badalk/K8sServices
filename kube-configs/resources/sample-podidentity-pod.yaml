@@ -3,7 +3,7 @@ kind: Pod
 metadata:
   labels:
     app: nginx-flex-kv-podid
-    aadpodidbinding: "prodpod"
+    aadpodidbinding: "demo1-azure-identity-binding"
   name: nginx-flex-kv-podid
 spec:
   containers:
@@ -25,4 +25,4 @@ spec:
         keyvaultobjectversions: "237851d935e24ac8b63abb1b41a01854"     # [OPTIONAL] list of KeyVault object versions (semi-colon separated), will get latest if empty
         resourcegroup: "rg-secrets"              # the resource group of the KeyVault
         subscriptionid: "4dfeb08c-7e41-40af-a9fa-fabcac401c2d"             # the subscription ID of the KeyVault
-        tenantid: "b25fcb44-9c49-413c-9fdc-b59b39447b84"                   # the tenant ID of the KeyVault
+        tenantid: "b25fcb44-9c49-413c-9fdc-b59b39447b84"                   # the tenant ID of the KeyVaultjyh
