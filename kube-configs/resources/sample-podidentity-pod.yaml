@@ -3,7 +3,7 @@ kind: Pod
 metadata:
   labels:
     app: nginx-flex-kv-podid
-    aadpodidbinding: "demo1-azure-identity-binding"
+    aadpodidbinding: "prodpod"
   name: nginx-flex-kv-podid
 spec:
   containers:
