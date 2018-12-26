@@ -50,7 +50,7 @@ class ProductRepository {
         connection.on('connect', function(err) {  
             // If no error, then good to proceed.  
             console.log("Connected");  
-            executeStatement(products);  
+            executeStatement();  
         });  
     
         function executeStatement() {  
