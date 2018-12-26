@@ -35,7 +35,7 @@ class ProductRepository {
  
     getAll() {
         var Connection = require('tedious').Connection;  
-        var Request = require('tedious').Request; 
+        var request = require('tedious').Request; 
         
         var config = {  
             userName: 'badal',  
