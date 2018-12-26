@@ -54,7 +54,7 @@ class ProductRepository {
         });  
     
         function executeStatement() {  
-            request = new Request("SELECT c.CustomerID, c.CompanyName,COUNT(soh.SalesOrderID) AS OrderCount FROM SalesLT.Customer AS c LEFT OUTER JOIN SalesLT.SalesOrderHeader AS soh ON c.CustomerID = soh.CustomerID GROUP BY c.CustomerID, c.CompanyName ORDER BY OrderCount DESC;", function(err) {  
+            request = new Request("SELECT ProductID, Name, Price from [dbo].[Product];", function(err) {  
             if (err) {  
                 console.log(err);}  
             });  
