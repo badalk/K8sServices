@@ -1,97 +1,42 @@
-//Initiallising node modules
-var express = require("express");
-var bodyParser = require("body-parser");
-var sql = require("mssql");
-const prod = require('../json/product');
-
-//Initiallising connection string
-var dbConfig = {
-    user:  "badal",
-    password: "Welcome1234#",
-    server: "k8sdbserver.database.windows.net",
-    database:"k8sdb"
-}
-// Body Parser Middleware
-
-
-// //Setting up server
-//  var server = app.listen(process.env.PORT || 8080, function () {
-//     var port = server.address().port;
-//     console.log("App now running on port", port);
-//  });
-
+'use strict';
+ 
+const Product = require('../json/product');
+ 
 class ProductRepository {
     constructor() {
-        this.products = {}
+        this.products = new Map([
+            [1, new Product(1, 'Product 1', 10 )],
+            [2, new Product(2, 'Product 2', 20)],
+            [3, new Product(3, 'Product 3', 30)],
+            [4, new Product(4, 'Product 4', 40)]
+        ]);
     }
-
-    //Function to connect to database and execute query
-    executeQuery(res, query){             
-        sql.connect(dbConfig, function (err) {
-            if (err) {   
-                        console.log("Error while connecting database :- " + err);
-                        res.send(err);
-                    }
-                    else {
-                            // create Request object
-                            var request = new sql.Request();
-                            // query to the database
-                            request.query(query, function (err, res) {
-                                if (err) {
-                                    console.log("Error while querying database :- " + err);
-                                    res.send(err);
-                                }
-                                else {
-                                    res.send(res);
-                                }
-                            });
-                        }
-        });           
+ 
+    getById(id) {
+        return this.products.get(id);
     }
-
-    //GET API
-    getById(id , res){
-        var query = "select * from [dbo].[Product] Where ProductId = " + id;
-        executeQuery (res, query);
+ 
+    getAll() {
+        return Array.from(this.products.values());
     }
-
-    //POST API
-    getAll(req , res){
-        console.log('in getAll');
-        var query = "select * from [dbo].[Product]";
-        sql.connect(dbConfig, function (err) {
-            if (err) {   
-                        console.log("Error while connecting database :- " + err);
-                        res.send(err);
-                    }
-                    else {
-                            // create Request object
-                            var request = new sql.Request();
-                            // query to the database
-                            request.query(query, function (err, res) {
-                                if (err) {
-                                    console.log("Error while querying database :- " + err);
-                                    res.send(err);
-                                }
-                                else {
-                                    console.log('getall response: ' + res);
-                                    res.send(res);
-                                }
-                        });
-                        }
-        }); 
+ 
+    remove() {
+        const keys = Array.from(this.products.keys());
+        this.products.delete(keys[keys.length - 1]);
     }
-
-    //PUT API
-    save(req , res){
-        var query = "UPDATE [dbo].[Product] SET Name= " + req.body.Name  +  " , Email=  " + req.body.Email + "  WHERE Id=" + req.params.id;
-        executeQuery (res, query);
+ 
+    save(product) {
+        if (this.getById(product.id) !== undefined) {
+            this.products[product.id] = product;
+            return "Updated Product with id=" + product.id;
+        }
+        else {
+            this.products.set(product.id, product);
+            return "Added Product with id=" + product.id;
+        }
     }
-
-    // DELETE API
-    delete(id , res){
-        var query = "DELETE FROM [dbo].[Product] WHERE Id=" + id;
-        executeQuery (res, query);
-    }
-
-};
+}
+ 
+const productRepository = new ProductRepository();
+ 
+module.exports = productRepository;
