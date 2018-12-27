@@ -2,6 +2,7 @@
 var express = require("express");
 var bodyParser = require("body-parser");
 var sql = require("mssql");
+const prod = require('../json/product');
 
 //Initiallising connection string
 var dbConfig = {
@@ -43,7 +44,7 @@ class ProductRepository {
                                 else {
                                     res.send(res);
                                 }
-                        });
+                            });
                         }
         });           
     }
@@ -56,8 +57,29 @@ class ProductRepository {
 
     //POST API
     getAll(req , res){
+        console.log('in getAll');
         var query = "select * from [dbo].[Product]";
-        executeQuery (res, query);
+        sql.connect(dbConfig, function (err) {
+            if (err) {   
+                        console.log("Error while connecting database :- " + err);
+                        res.send(err);
+                    }
+                    else {
+                            // create Request object
+                            var request = new sql.Request();
+                            // query to the database
+                            request.query(query, function (err, res) {
+                                if (err) {
+                                    console.log("Error while querying database :- " + err);
+                                    res.send(err);
+                                }
+                                else {
+                                    console.log('getall response: ' + res);
+                                    res.send(res);
+                                }
+                        });
+                        }
+        }); 
     }
 
     //PUT API
