@@ -1,146 +1,75 @@
-'use strict';
- 
-const Product = require('../json/product');
-var Connection = require('tedious').Connection;
-var Request = require('tedious').Request;
-//const sql = require('mssql')
+//Initiallising node modules
+var express = require("express");
+var bodyParser = require("body-parser");
+var sql = require("mssql");
+
+//Initiallising connection string
+var dbConfig = {
+    user:  "badal",
+    password: "Welcome1234#",
+    server: "k8sdbserver.database.windows.net",
+    database:"k8sdb"
+}
+// Body Parser Middleware
 
 
-
-// var Connection = require('tedious').Connection;  
-// var config = {  
-//     userName: 'badal',  
-//     password: 'Welcome1234#',  
-//     server: 'k8sdbserver.database.windows.net',  
-//     // If you are on Microsoft Azure, you need this:  
-//     options: {encrypt: true, database: 'k8sdb'}  
-// };  
-// var connection = new Connection(config);  
-
-// connection.on('connect', function(err) {  
-// // If no error, then good to proceed.  
-//     console.log("Connected");  
-// });  
-
-
+// //Setting up server
+//  var server = app.listen(process.env.PORT || 8080, function () {
+//     var port = server.address().port;
+//     console.log("App now running on port", port);
+//  });
 
 class ProductRepository {
     constructor() {
         this.products = {}
     }
- 
-    getById(id) {
-        return this.products.get(id);
-    }
- 
-    getAll() {
-        var Connection = require('tedious').Connection;  
-        var request = require('tedious').Request; 
-        
-        var config = {  
-            userName: 'badal',  
-            password: 'Welcome1234#',  
-            server: 'k8sdbserver.database.windows.net',  
-            // If you are on Microsoft Azure, you need this:  
-            options: {encrypt: true, database: 'k8sdb'}  
-        }; 
 
-        var connection = new Connection(config); 
-         
-        connection.on('connect', function(err) {  
-            // If no error, then good to proceed.  
-            console.log("Connected");  
-            executeStatement();  
-        });  
-    
-        function executeStatement() {  
-            request = new Request("SELECT ProductID, Name, Price from [dbo].[Product];", function(err) {  
-            if (err) {  
-                console.log(err);}  
-            });  
-            var result = "";  
-            request.on('row', function(columns) {  
-                // columns.forEach(function(column) {  
-                //   if (column.value === null) {  
-                //     console.log('NULL');  
-                //   } else {  
-                //     result+= column.value + " ";  
-                //   }  
-                // });  
-                var prod = new Product();
-                prod.id = columns["ProductId"];
-                prod.name = columns["Name"];
-                prod.price = columns["Price"];
-
-                this.products.push(prod);
-             
-            });  
-    
-            request.on('done', function(rowCount, more) {  
-                console.log(rowCount + ' rows returned');  
-            });  
-            connection.execSql(request);  
-        }   
-
+    //Function to connect to database and execute query
+    executeQuery(res, query){             
+        sql.connect(dbConfig, function (err) {
+            if (err) {   
+                        console.log("Error while connecting database :- " + err);
+                        res.send(err);
+                    }
+                    else {
+                            // create Request object
+                            var request = new sql.Request();
+                            // query to the database
+                            request.query(query, function (err, res) {
+                                if (err) {
+                                    console.log("Error while querying database :- " + err);
+                                    res.send(err);
+                                }
+                                else {
+                                    res.send(res);
+                                }
+                        });
+                        }
+        });           
     }
 
- 
-    remove() {
-        const keys = Array.from(this.products.keys());
-        this.products.delete(keys[keys.length - 1]);
+    //GET API
+    getById(id , res){
+        var query = "select * from [dbo].[Product] Where ProductId = " + id;
+        executeQuery (res, query);
     }
- 
-    save(product) {
 
-        var Connection = require('tedious').Connection;  
-        var config = {  
-            userName: 'badal',  
-            password: 'Welcome1234#',  
-            server: 'k8sdbserver.database.windows.net',  
-            // If you are on Azure SQL Database, you need these next options.  
-            options: {encrypt: true, database: 'k8sdb'}  
-        };  
-        var connection = new Connection(config);  
-        connection.on('connect', function(err) {  
-            // If no error, then good to proceed.  
-            console.log("Connected");  
-            executeStatement1();  
-        });  
-    
-        var Request = require('tedious').Request  
-        var TYPES = require('tedious').TYPES;  
-    
-        function executeStatement1() {  
-            request = new Request("INSERT Product (Name, Price) OUTPUT INSERTED.ProductID VALUES (@Name, @Price);", function(err) {  
-                        if (err) {  
-                            console.log(err);}  
-                        });  
-            request.addParameter('Name', TYPES.NVarChar, product.name);  
-            request.addParameter('Price', TYPES.Decimal, product.price);  
-            request.on('row', function(columns) {  
-                columns.forEach(function(column) {  
-                  if (column.value === null) {  
-                    console.log('NULL');  
-                  } else {  
-                    console.log("Product id of inserted item is " + column.value);  
-                    product.id = column.value
-                  }  
-                });  
-            });       
-            connection.execSql(request);  
-        }
-
-        if (this.getById(product.id) !== undefined) {
-            this.products[product.id] = product;
-            return "Updated Product with id=" + product.id;
-        }
-        else {
-            this.products.set(product.id, product);
-            return "Added Product with id=" + product.id;
-        }
+    //POST API
+    getAll(req , res){
+        var query = "select * from [dbo].[Product]";
+        executeQuery (res, query);
     }
-}
- 
-const productRepository = new ProductRepository();
- 
-module.exports = productRepository;
+
+    //PUT API
+    save(req , res){
+        var query = "UPDATE [dbo].[Product] SET Name= " + req.body.Name  +  " , Email=  " + req.body.Email + "  WHERE Id=" + req.params.id;
+        executeQuery (res, query);
+    }
+
+    // DELETE API
+    delete(id , res){
+        var query = "DELETE FROM [dbo].[Product] WHERE Id=" + id;
+        executeQuery (res, query);
+    }
+
+};
