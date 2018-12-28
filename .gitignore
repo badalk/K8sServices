@@ -1,6 +1,9 @@
 Product/Product-Service/node_modules/*
 Product/Product-Service/coverage/*
 Product/Product-Service/npm-debug.log
+Product/new-product-service/node_modules/*
+Product/new-product-service/coverage/*
+Product/new-product-service/npm-debug.log
 Customer/Customer-Service/node_modules/*
 Customer/Customer-Service/coverage/*
 Customer/Customer-Service/npm-debug.log

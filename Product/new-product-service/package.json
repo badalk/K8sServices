@@ -1,0 +1,16 @@
+{
+  "name": "new-product",
+  "version": "1.0.0",
+  "description": "new product service with db",
+  "main": "app.js",
+  "dependencies": {
+    "express": "^4.16.4",
+    "mssql": "^4.3.0"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "start"
+  },
+  "author": "Badal K",
+  "license": "ISC"
+}
