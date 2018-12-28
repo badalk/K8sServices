@@ -12,4 +12,4 @@ EXPOSE 80 443
  
 ENV PORT 80
 
-CMD ["npm", "start"],
+CMD ["npm", "start"]

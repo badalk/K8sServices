@@ -1,5 +1,6 @@
-var express = require('express');
-var app = express();
+var express = require('express'),
+    app = express(),
+    port = process.env.PORT || 80
 
 app.get('/', function (req, res) {
    
@@ -33,6 +34,6 @@ app.get('/', function (req, res) {
     });
 });
 
-var server = app.listen(5000, function () {
-    console.log('Server is running..');
+var server = app.listen(port, function () {
+    console.log('New Product Service is running..');
 });

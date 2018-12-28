@@ -23,8 +23,8 @@ prodRoutes(app);
  
 //Start the web server and listen for requests
 var server = app.listen(port, function () {
-	var host = server.address().address
-	var port = server.address().port
+	var host = server.host
+	var port = server.port
 	
-	console.log("Customer service listening at http://%s:%s", host, port)
+	console.log("Product service listening at http://%s:%s", host, port)
 });
