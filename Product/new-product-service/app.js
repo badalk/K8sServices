@@ -11,7 +11,10 @@ app.get('/', function (req, res) {
         user: 'badal',
         password: 'Welcome1234#',
         server: 'k8sdbserver.database.windows.net', 
-        database: 'k8sdb' 
+        database: 'k8sdb', 
+        options: {
+            encrypt: true
+        }
     };
 
     // connect to your database
