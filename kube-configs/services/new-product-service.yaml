@@ -1,0 +1,53 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: new-product-service
+  namespace: product
+spec:
+  type: ClusterIP
+  ports:
+  - name: tcp-80
+    port: 80
+    targetPort: new-prod-web
+    protocol: TCP
+  - name: tcp-443
+    port: 443
+    targetPort: new-prod-secure
+    protocol: TCP
+  selector:
+    app: new-product-service
+---
+apiVersion: apps/v1beta1
+kind: Deployment
+metadata:
+  name: new-product-service
+  namespace: product
+spec:
+  replicas: 2
+  strategy:
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 1
+  minReadySeconds: 5
+  template:
+    metadata:
+      labels:
+        app: new-product-service
+        namespace: product
+    spec:
+      containers:
+      - name: new-product-service
+        image: badalacr.azurecr.io/new-product-service:v1
+        imagePullPolicy: Always
+        ports:
+        - name: new-prod-web
+          containerPort: 80
+          protocol: TCP
+        - name: new-prod-secure
+          containerPort: 443
+          protocol:  TCP
+        resources:
+          requests:
+            cpu: 100m
+          limits:
+            cpu: 200m
