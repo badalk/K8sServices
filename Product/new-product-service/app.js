@@ -18,6 +18,7 @@ app.get('/', function (req, res) {
     };
 
     // connect to your database
+    sql.close();
     sql.connect(config, function (err) {
     
         if (err) console.log(err);
@@ -29,7 +30,7 @@ app.get('/', function (req, res) {
         request.query('select * from [dbo].[Product]', function (err, recordset) {
             
             if (err) console.log(err)
-
+            
             // send records as a response
             res.send(recordset);
             
