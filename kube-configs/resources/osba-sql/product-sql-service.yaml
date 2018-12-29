@@ -1,0 +1,17 @@
+apiVersion: servicecatalog.k8s.io/v1beta1
+kind: ServiceInstance
+metadata:
+  name: prodsqlinstance
+  namespace: product
+spec:
+  clusterServiceClassExternalName: azure-sql-12-0
+  clusterServicePlanExternalName: standard
+  parameters:
+    location: eastus2
+    resourceGroup: rg-sql
+    firewallRules:
+    - startIPAddress: "0.0.0.0"
+      endIPAddress: "255.255.255.255"
+      name: "AllowAll"
+    dtus: 10
+---

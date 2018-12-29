@@ -1,0 +1,26 @@
+apiVersion: servicecatalog.k8s.io/v1beta1
+kind: ServiceInstance
+metadata:
+  name: demosqlinstance
+  namespace: default
+spec:
+  clusterServiceClassExternalName: azure-sql-12-0
+  clusterServicePlanExternalName: standard
+  parameters:
+    location: eastus2
+    resourceGroup: osbademo-resources-rg
+    firewallRules:
+    - startIPAddress: "0.0.0.0"
+      endIPAddress: "255.255.255.255"
+      name: "AllowAll"
+    dtus: 10
+---
+apiVersion: servicecatalog.k8s.io/v1beta1
+kind: ServiceBinding
+metadata:
+  name: demosql-binding
+  namespace: default
+spec:
+  instanceRef:
+    name: demosqlinstance
+  secretName: demo-osba-sql-secret
