@@ -6,6 +6,11 @@ app.get('/', function (req, res) {
    
     var sql = require("mssql");
 
+    var fs = require('fs');
+ 
+    var contents = fs.readFileSync('/etc/sqlsecrets', 'utf8');
+    console.log('secret contents: ' + contents);
+
     // config for your database
     var config = {
         user: 'badal',
