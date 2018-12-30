@@ -39,6 +39,10 @@ spec:
       - name: new-product-service
         image: badalacr.azurecr.io/new-product-service:v1
         imagePullPolicy: Always
+        volumeMounts:
+        - name: sqlsecrets
+          mountPath: "/etc/sqlsecrets"
+          readOnly: true
         ports:
         - name: http
           containerPort: 80
@@ -51,3 +55,7 @@ spec:
             cpu: 100m
           limits:
             cpu: 200m
+      volumes:
+      - name: sqlsecrets
+        secret:
+          secretName: prod-osba-sql-secret
