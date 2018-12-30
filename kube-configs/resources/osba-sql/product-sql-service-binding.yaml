@@ -1,0 +1,9 @@
+apiVersion: servicecatalog.k8s.io/v1beta1
+kind: ServiceBinding
+metadata:
+  name: prodsql-binding
+  namespace: product
+spec:
+  instanceRef:
+    name: prodsqlinstance
+  secretName: prod-osba-sql-secret
