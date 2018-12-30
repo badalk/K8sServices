@@ -8,8 +8,17 @@ app.get('/', function (req, res) {
 
     var fs = require('fs');
  
-    var contents = fs.readFileSync('/etc/sqlsecrets', 'utf8');
-    console.log('secret contents: ' + contents);
+    var path = '/etc/sqlsecrets'
+
+    fs.readdir(path, function(err, items) {
+        console.log(items);
+     
+        for (var i=0; i<items.length; i++) {
+            var file = path + '/' + items[i];
+            var contents = fs.readFileSync(file, 'utf8');
+            console.log('secret contents of ' + items[i] + ': ' + contents);
+        }
+    });
 
     // config for your database
     var config = {
