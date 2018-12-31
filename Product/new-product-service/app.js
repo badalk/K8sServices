@@ -17,17 +17,15 @@ app.get('/', function (req, res) {
             var file = path + '/' + items[i];
             console.log('processing ' + file);
             fs.stat(file, (err, stats) => {
-                console.log('with fs.stat: ' + items[i] + ' is a directory? ' + stats.isDirectory());
+                console.log('with fs.stat: ' + file + ' is a directory? ' + stats.isDirectory());
+                if (!stats.isDirectory()){
+                    var contents = fs.readFileSync(file, 'utf8');
+                    console.log('secret contents of ' + file + ': ' + contents);
+                }
+                else{
+                    console.log(file + ' is a directory');
+                }
             });
-
-            
-            if (fs.lstatSync(file).isFile()){
-                var contents = fs.readFileSync(file, 'utf8');
-                console.log('secret contents of ' + items[i] + ': ' + contents);
-            }
-            else{
-                console.log(items[i] + ' is a directory');
-            }
         }
     });
 
