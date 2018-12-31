@@ -17,7 +17,7 @@ app.get('/', function (req, res) {
             var file = path + '/' + items[i];
             console.log('processing ' + file);
             fs.stat(file, (err, stats) => {
-                console.log('with fs.stat: ' + itms[i] + ' is a directory? ' + stats.isDirectory());
+                console.log('with fs.stat: ' + items[i] + ' is a directory? ' + stats.isDirectory());
             });
 
             
