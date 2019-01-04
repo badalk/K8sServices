@@ -8,7 +8,7 @@ app.get('/', function (req, res) {
 
     var fs = require('fs');
  
-    var path = '/etc/sqlsecrets'
+    var path = '/etc/sqlsecrets/db'
 
     fs.readdir(path, function(err, items) {
         console.log(items);
