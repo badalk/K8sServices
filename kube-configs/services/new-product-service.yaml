@@ -39,6 +39,42 @@ spec:
       - name: new-product-service
         image: badalacr.azurecr.io/new-product-service:v1
         imagePullPolicy: Always
+        env:
+          - name: SECRET_DBNAME
+            valueFrom:
+              secretKeyRef:
+                name: prod-osba-sql-secret
+                key: database
+          - name: SECRET_ENCRYPT
+            valueFrom:
+              secretKeyRef:
+                name: prod-osba-sql-secret
+                key: encrypt
+          - name: SECRET_HOST
+            valueFrom:
+              secretKeyRef:
+                name: prod-osba-sql-secret
+                key: host
+          - name: SECRET_PORT
+            valueFrom:
+              secretKeyRef:
+                name: prod-osba-sql-secret
+                key: port
+          - name: SECRET_URI
+            valueFrom:
+              secretKeyRef:
+                name: prod-osba-sql-secret
+                key: uri
+          - name: SECRET_USERNAME
+            valueFrom:
+              secretKeyRef:
+                name: prod-osba-sql-secret
+                key: username
+          - name: SECRET_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                name: prod-osba-sql-secret
+                key: password
         volumeMounts:
         - name: sqlsecrets
           mountPath: "/etc/sqlsecrets"
@@ -59,3 +95,18 @@ spec:
       - name: sqlsecrets
         secret:
           secretName: prod-osba-sql-secret
+          items:
+          - key: database
+            path: db/database
+          - key: host
+            path: db/host
+          - key: port
+            path: db/port
+          - key: uri
+            path: db/uri
+          - key: username
+            path: db/username
+          - key: password
+            path: db/password
+          - key: encrypt
+            path: db/encrypt
