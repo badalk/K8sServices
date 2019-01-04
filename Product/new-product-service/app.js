@@ -16,7 +16,7 @@ app.get('/', function (req, res) {
         for (var i=0; i<items.length; i++) {
             var file = path + '/' + items[i];
             console.log('processing ' + file);
-            fs.stat(file, (err, stats) => {
+            fs.lstatSync(file, (err, stats) => {
                 console.log('with fs.stat: ' + file + ' is a directory? ' + stats.isDirectory());
                 if (!stats.isDirectory()){
                     var contents = fs.readFileSync(file, 'utf8');
