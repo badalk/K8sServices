@@ -45,15 +45,32 @@ app.get('/', function (req, res) {
     //************************************* */
     console.log(process.env);
 
+    path = '/etc/kvmnt';
+    console.log('loading secrets from key-vault....');
+    var username = fs.readFileSync(path + '/username');
+    console.log('username: ' + username);
+    var dbhost = fs.readFileSync(path + '/dbhost');
+    console.log('dbhost: ' + dbhost);
+    var dbname = fs.readFileSync(path + '/dbname');
+    console.log('dbname: ' + dbname);
+    var pwd = fs.readFileSync(path + '/password');
+    console.log('pwd: ' + password);
+    var dbport = fs.readFileSync(path + '/dbport');
+    console.log('dbport: ' + dbport);
+    var encryptConnection = fs.readFileSync(path + '/encrypt');
+    console.log('encrypt: ' + encrypt);
+
+
 
     // config for your database
     var config = {
-        user: 'badal',
-        password: 'Welcome1234#',
-        server: 'k8sdbserver.database.windows.net', 
-        database: 'k8sdb', 
+        user: username,
+        password: pwd,
+        server: dbhost, 
+        database: dbname, 
+        port: dbport,
         options: {
-            encrypt: true
+            encrypt: encryptConnection
         }
     };
 

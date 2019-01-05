@@ -37,7 +37,7 @@ spec:
     spec:
       containers:
       - name: new-product-service-kvflex
-        image: badalacr.azurecr.io/new-product-service:v1
+        image: badalacr.azurecr.io/new-product-service-kvflex:v1
         imagePullPolicy: Always
         env:
           - name: SECRET_DBNAME
