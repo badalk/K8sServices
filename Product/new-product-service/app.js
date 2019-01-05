@@ -10,18 +10,21 @@ app.get('/', function (req, res) {
  
     var path = '/etc/sqlsecrets/db'
 
+    //************************************* */
+    //*********** READING SECRETS FROM MOUNTED VOLUME ****************** */
+    //************************************* */
     fs.readdir(path, function(err, items) {
         console.log(items);
      
         for (var i=0; i<items.length; i++) {
             var file = path + '/' + items[i];
-            console.log('processing ' + file);
+            //console.log('processing ' + file);
             try{
                 var stats = fs.lstatSync(file) 
 
-                console.log('stats:::');
-                console.log(stats);
-                console.log('with fs.stat: ' + file + ' is a directory? ' + stats.isDirectory());
+                //console.log('stats:::');
+                //console.log(stats);
+                //console.log('with fs.stat: ' + file + ' is a directory? ' + stats.isDirectory());
                 if (!stats.isDirectory()){
                     var contents = fs.readFileSync(file, 'utf8');
                     console.log('secret contents of ' + file + ': ' + contents);
@@ -36,6 +39,12 @@ app.get('/', function (req, res) {
             }
         }
     });
+
+    //************************************* */
+    //*********** READING SECRETS FROM Environment Variables VOLUME ****************** */
+    //************************************* */
+    Console.log(process.env);
+
 
     // config for your database
     var config = {
