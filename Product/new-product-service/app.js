@@ -43,7 +43,7 @@ app.get('/', function (req, res) {
     //************************************* */
     //*********** READING SECRETS FROM Environment Variables VOLUME ****************** */
     //************************************* */
-    Console.log(process.env);
+    console.log(process.env);
 
 
     // config for your database
