@@ -33,7 +33,7 @@ spec:
     metadata:
       labels:
         app: new-product-service-kvflex
-        aadpodidbinding: "prodpod"        
+        aadpodidbinding: prodpod
         namespace: product
     spec:
       containers:
@@ -78,10 +78,10 @@ spec:
                 key: password
         volumeMounts:
           - name: productdbkeys
-            mountPath: "/etc/kvmnt"
+            mountPath: /etc/kvmnt
             readOnly: true
           - name: sqlsecrets
-            mountPath: "/etc/sqlsecrets"
+            mountPath: /etc/sqlsecrets
             readOnly: true            
         ports:
         - name: http
