@@ -5,4 +5,4 @@ metadata:
  namespace: product
 spec:
  AzureIdentity: product-az-id
- Selector: prodpod
+ Selector: prod-svc-pod

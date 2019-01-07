@@ -5,5 +5,5 @@ metadata:
  namespace: product
 spec:
  type: 0
- ResourceID: /subscriptions/4dfeb08c-7e41-40af-a9fa-fabcac401c2d/resourcegroups/MC_rg-aks-arm_myfirstakscluster_eastus2/providers/Microsoft.ManagedIdentity/userAssignedIdentities/kvreader
- ClientID: c566d081-29df-4176-a13b-39a4ece81382
+ ResourceID: /subscriptions/4dfeb08c-7e41-40af-a9fa-fabcac401c2d/resourcegroups/rg-secrets/providers/Microsoft.ManagedIdentity/userAssignedIdentities/k8s-kv-identity
+ ClientID: e9388487-fafb-4ea2-8a18-e993c279bfd3

@@ -33,7 +33,7 @@ spec:
     metadata:
       labels:
         app: new-product-service-kvflex
-        aadpodidbinding: prodpod
+        aadpodidbinding: prod-svc-pod
         namespace: product
     spec:
       containers:
