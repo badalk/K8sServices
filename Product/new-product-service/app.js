@@ -47,43 +47,46 @@ app.get('/', function (req, res) {
 
     path = '/etc/kvmnt';
     console.log('loading secrets from key-vault....');
-    var username = fs.readFileSync(path + '/username');
+    var username = fs.readFileSync(path + '/username', "utf8");
     console.log('username: ' + username);
-    var dbhost = fs.readFileSync(path + '/dbhost');
+    var dbhost = fs.readFileSync(path + '/dbhost', "utf8");
     console.log('dbhost: ' + dbhost);
-    var dbname = fs.readFileSync(path + '/dbname');
+    var dbname = fs.readFileSync(path + '/dbname', "utf8");
     console.log('dbname: ' + dbname);
-    var pwd = fs.readFileSync(path + '/password');
+    var pwd = fs.readFileSync(path + '/password', "utf8");
     console.log('pwd: ' + pwd);
-    var dbport = fs.readFileSync(path + '/dbport');
+    var dbport = parseInt(fs.readFileSync(path + '/dbport', "utf8"));
     console.log('dbport: ' + dbport);
-    var encryptConnection = fs.readFileSync(path + '/encrypt');
+    var encryptConnection = (fs.readFileSync(path + '/encrypt', "utf8") === 'true');
     console.log('encrypt: ' + encryptConnection);
 
 
 
-    // // config for your database
-    // var config = {
-    //     user: '\'' + username + '\'',
-    //     password: '\'' + pwd + '\'',
-    //     server: '\'' + dbhost + '\'',
-    //     database: '\'' + dbname + '\'',
-    //     port: '\'' + dbport + '\'',
-    //     options: {
-    //         encrypt: '\'' + encryptConnection + '\'',
-    //     }
-    // };
+    // config for your database
+    var config = {
+        user: username,
+        password: pwd,
+        server: dbhost,
+        database: dbname,
+        port: dbport,
+        options: {
+            encrypt: encryptConnection,
+        }
+    };
 
-    var config = {}
-    config.user = username;
-    config.password = pwd;
-    config.server = dbhost;
-    config.database = dbname;
-    config.port = dbport;
-    config.options = {};
-    config.options.encrypt = encryptConnection;
+    // var config = {}
+    // config.user = username;
+    // config.password = pwd;
+    // config.server = dbhost;
+    // config.database = dbname;
+    // config.port = dbport;
+    // config.options = {};
+    // config.options.encrypt = encryptConnection;
 
-    console.log (config);
+    var connectionstring = 'mssql://' + username + ":" + pwd + "@" + dbhost + "/" + dbname + "?encrypt=" + encryptConnection;
+    console.log (connectionstring);
+
+    //console.log (config);
 
         // // config for your database
         // var config = {
@@ -99,6 +102,7 @@ app.get('/', function (req, res) {
 
     // connect to your database
     sql.close();
+   
     sql.connect(config, function (err) {
     
         if (err) console.log(err);
