@@ -70,7 +70,7 @@ app.get('/', function (req, res) {
         database: `'$dbname'`, 
         port: dbport,
         options: {
-            encrypt: eencryptConnection
+            encrypt: encryptConnection
         }
     };
 
