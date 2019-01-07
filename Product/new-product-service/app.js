@@ -54,11 +54,11 @@ app.get('/', function (req, res) {
     var dbname = fs.readFileSync(path + '/dbname');
     console.log('dbname: ' + dbname);
     var pwd = fs.readFileSync(path + '/password');
-    console.log('pwd: ' + password);
+    console.log('pwd: ' + pwd);
     var dbport = fs.readFileSync(path + '/dbport');
     console.log('dbport: ' + dbport);
     var encryptConnection = fs.readFileSync(path + '/encrypt');
-    console.log('encrypt: ' + encrypt);
+    console.log('encrypt: ' + encryptConnection);
 
 
 
