@@ -68,9 +68,9 @@ app.get('/', function (req, res) {
         password: `'$pwd'`,
         server: `'$dbhost'`,
         database: `'$dbname'`, 
-        port: `$dbport`,
+        port: dbport,
         options: {
-            encrypt: `$encryptConnection`
+            encrypt: eencryptConnection
         }
     };
 
