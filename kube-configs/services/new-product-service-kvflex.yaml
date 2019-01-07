@@ -41,9 +41,9 @@ spec:
         image: badalacr.azurecr.io/new-product-service-kvflex:v1
         imagePullPolicy: Always
         volumeMounts:
-          - name: "productdbkeys"
-            mountPath: "/kvmnt"
-            readOnly: true
+        - name: test
+          mountPath: /kvmnt
+          readOnly: true
         ports:
         - name: http
           containerPort: 80
@@ -57,7 +57,7 @@ spec:
           limits:
             cpu: 200m
       volumes:
-      - name: "productdbkeys"
+      - name: test
         flexVolume:
           driver: "azure/kv"
           options:
