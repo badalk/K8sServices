@@ -64,13 +64,13 @@ app.get('/', function (req, res) {
 
     // config for your database
     var config = {
-        user: `'$username'`,
-        password: `'$pwd'`,
-        server: `'$dbhost'`,
-        database: `'$dbname'`, 
-        port: dbport,
+        user: '\'' + username + '\'',
+        password: '\'' + pwd + '\'',
+        server: '\'' + dbhost + '\'',
+        database: '\'' + dbname + '\'',
+        port: '\'' + dbport + '\'',
         options: {
-            encrypt: encryptConnection
+            encrypt: '\'' + encryptConnection + '\'',
         }
     };
 
