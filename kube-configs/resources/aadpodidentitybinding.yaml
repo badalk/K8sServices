@@ -3,5 +3,5 @@ kind: AzureIdentityBinding
 metadata:
  name: demo1-azure-identity-binding
 spec:
- AzureIdentity: az-kvreader-identity
+ AzureIdentity: k8s-kv-identity
  Selector: prodpod
