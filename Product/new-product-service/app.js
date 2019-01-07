@@ -74,33 +74,8 @@ app.get('/', function (req, res) {
         }
     };
 
-    // var config = {}
-    // config.user = username;
-    // config.password = pwd;
-    // config.server = dbhost;
-    // config.database = dbname;
-    // config.port = dbport;
-    // config.options = {};
-    // config.options.encrypt = encryptConnection;
+    console.log (config);
 
-    var connectionstring = 'mssql://' + username + ":" + pwd + "@" + dbhost + "/" + dbname + "?encrypt=" + encryptConnection;
-    console.log (connectionstring);
-
-    //console.log (config);
-
-        // // config for your database
-        // var config = {
-        //     user: 'badal',
-        //     password: 'Welcome1234#',
-        //     server: 'k8sdbserver.database.windows.net', 
-        //     database: 'k8sdb', 
-        //     port: '1433',
-        //     options: {
-        //         encrypt: 'true'
-        //     }
-        // };
-
-    // connect to your database
     sql.close();
    
     sql.connect(config, function (err) {
