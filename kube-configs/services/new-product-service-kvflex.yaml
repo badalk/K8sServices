@@ -33,56 +33,17 @@ spec:
     metadata:
       labels:
         app: new-product-service-kvflex
-        aadpodidbinding: prod-svc-pod
+        aadpodidbinding: "prod-svc-pod"
         namespace: product
     spec:
       containers:
       - name: new-product-service-kvflex
         image: badalacr.azurecr.io/new-product-service-kvflex:v1
         imagePullPolicy: Always
-        env:
-          - name: SECRET_DBNAME
-            valueFrom:
-              secretKeyRef:
-                name: prod-osba-sql-secret
-                key: database
-          - name: SECRET_ENCRYPT
-            valueFrom:
-              secretKeyRef:
-                name: prod-osba-sql-secret
-                key: encrypt
-          - name: SECRET_HOST
-            valueFrom:
-              secretKeyRef:
-                name: prod-osba-sql-secret
-                key: host
-          - name: SECRET_PORT
-            valueFrom:
-              secretKeyRef:
-                name: prod-osba-sql-secret
-                key: port
-          - name: SECRET_URI
-            valueFrom:
-              secretKeyRef:
-                name: prod-osba-sql-secret
-                key: uri
-          - name: SECRET_USERNAME
-            valueFrom:
-              secretKeyRef:
-                name: prod-osba-sql-secret
-                key: username
-          - name: SECRET_PASSWORD
-            valueFrom:
-              secretKeyRef:
-                name: prod-osba-sql-secret
-                key: password
         volumeMounts:
-          - name: productdbkeys
-            mountPath: /kvmnt
+          - name: "productdbkeys"
+            mountPath: "/kvmnt"
             readOnly: true
-          - name: sqlsecrets
-            mountPath: /etc/sqlsecrets
-            readOnly: true            
         ports:
         - name: http
           containerPort: 80
@@ -96,7 +57,7 @@ spec:
           limits:
             cpu: 200m
       volumes:
-      - name: productdbkeys
+      - name: "productdbkeys"
         flexVolume:
           driver: "azure/kv"
           options:
@@ -108,21 +69,3 @@ spec:
             resourcegroup: "rg-secrets"              # the resource group of the KeyVault
             subscriptionid: "4dfeb08c-7e41-40af-a9fa-fabcac401c2d"             # the subscription ID of the KeyVault
             tenantid: "b25fcb44-9c49-413c-9fdc-b59b39447b84"                   # the tenant ID of the KeyVault
-      - name: sqlsecrets
-        secret:
-          secretName: prod-osba-sql-secret
-          items:
-          - key: database
-            path: db/database
-          - key: host
-            path: db/host
-          - key: port
-            path: db/port
-          - key: uri
-            path: db/uri
-          - key: username
-            path: db/username
-          - key: password
-            path: db/password
-          - key: encrypt
-            path: db/encrypt
