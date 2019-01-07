@@ -80,6 +80,7 @@ app.get('/', function (req, res) {
     config.server = dbhost;
     config.database = dbname;
     config.port = dbport;
+    config.options = {};
     config.options.encrypt = encryptConnection;
 
     console.log (config);
