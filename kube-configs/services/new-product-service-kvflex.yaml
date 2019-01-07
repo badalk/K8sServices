@@ -78,7 +78,7 @@ spec:
                 key: password
         volumeMounts:
           - name: productdbkeys
-            mountPath: /etc/kvmnt
+            mountPath: /kvmnt
             readOnly: true
           - name: sqlsecrets
             mountPath: /etc/sqlsecrets
