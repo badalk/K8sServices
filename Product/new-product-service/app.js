@@ -62,17 +62,25 @@ app.get('/', function (req, res) {
 
 
 
-    // config for your database
-    var config = {
-        user: '\'' + username + '\'',
-        password: '\'' + pwd + '\'',
-        server: '\'' + dbhost + '\'',
-        database: '\'' + dbname + '\'',
-        port: '\'' + dbport + '\'',
-        options: {
-            encrypt: '\'' + encryptConnection + '\'',
-        }
-    };
+    // // config for your database
+    // var config = {
+    //     user: '\'' + username + '\'',
+    //     password: '\'' + pwd + '\'',
+    //     server: '\'' + dbhost + '\'',
+    //     database: '\'' + dbname + '\'',
+    //     port: '\'' + dbport + '\'',
+    //     options: {
+    //         encrypt: '\'' + encryptConnection + '\'',
+    //     }
+    // };
+
+    var config = {}
+    config.user = username;
+    config.password = pwd;
+    config.server = dbhost;
+    config.database = dbname;
+    config.port = dbport;
+    config.options.encrypt = encryptConnection;
 
     console.log (config);
 
