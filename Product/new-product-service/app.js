@@ -62,30 +62,32 @@ app.get('/', function (req, res) {
 
 
 
-    // // config for your database
-    // var config = {
-    //     user: '\'' + username + '\'',
-    //     password: pwd,
-    //     server: dbhost, 
-    //     database: dbname, 
-    //     port: dbport,
-    //     options: {
-    //         encrypt: encryptConnection
-    //     }
-    // };
+    // config for your database
+    var config = {
+        user: `'$username'`,
+        password: `'$pwd'`,
+        server: `'$dbhost'`,
+        database: `'$dbname'`, 
+        port: `$dbport`,
+        options: {
+            encrypt: `$encryptConnection`
+        }
+    };
 
-        // config for your database
-        var config = {
-            user: 'badal',
-            password: 'Welcome1234#',
-            server: 'k8sdbserver.database.windows.net', 
-            database: 'k8sdb', 
-            port: '1433',
-            options: {
-                encrypt: 'true'
-            }
-        };
-        
+    console.log (config);
+
+        // // config for your database
+        // var config = {
+        //     user: 'badal',
+        //     password: 'Welcome1234#',
+        //     server: 'k8sdbserver.database.windows.net', 
+        //     database: 'k8sdb', 
+        //     port: '1433',
+        //     options: {
+        //         encrypt: 'true'
+        //     }
+        // };
+
     // connect to your database
     sql.close();
     sql.connect(config, function (err) {
