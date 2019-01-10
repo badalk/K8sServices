@@ -34,6 +34,10 @@ app.get('/', function (req, res) {
 });
 
 app.get('/:id', function (req, res) {
+
+    const prodId = parseInt(req.params.id);
+    console.log("product Id: " + prodId);
+    
     var sql = require("mssql");
     console.log("Getting product details");
 
@@ -45,15 +49,14 @@ app.get('/:id', function (req, res) {
             console.log("error connecting to database: " + err);
             res.status(500).send(err);
         }
-        const id = parseInt(req.params.id);
-        console.log("Finding product with ID: " + id);
+        console.log("Finding product with ID: " + prodId);
         // create Request object
         new sql.Request()    
-        .input("prodId", sql.Int, id)
-        .query("select * from [dbo].[Product] where ProductID = @prodId")
+        .input("productId", sql.Int, prodId)
+        .query("select * from [dbo].[Product] where ProductID = @productId")
         .then(function (prod) {
             if (prod == null || prod.length === 0){
-                console.log ("no product exists for product id " + id);
+                console.log ("no product exists for product id " + prodId);
                 res.status(404).send("Not Found");
             }
                 
@@ -61,7 +64,7 @@ app.get('/:id', function (req, res) {
             res.send(recordset);
         })
         .catch(function (error) {
-            console.log("Error retrieving product for product id " + id + ": " + error);
+            console.log("Error retrieving product for product id " + prodId + ": " + error);
         })
     });
 });
