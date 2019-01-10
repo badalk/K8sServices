@@ -9,13 +9,11 @@ app.get('/healthz', function(req,res) {
 app.get('/', function (req, res) {
    
     var sql = require("mssql");
-
     var config = GetSqlConnectionConfig();
 
     console.log (config);
-
     sql.close();
-   
+ 
     sql.connect(config, function (err) {
     
         if (err) console.log(err);
@@ -37,13 +35,20 @@ app.get('/', function (req, res) {
 
 app.get('/:id', function (req, res) {
     var sql = require("mssql");
+    console.log("Getting product details");
 
     var config = GetSqlConnectionConfig();
     sql.close();
    
     sql.connect(config, function (err) {
+        if (err) {
+            console.log("error connecting to database: " + err);
+            res.status(500).send(err);
+            return;
+        }
         new sqlInstance.Request()
         const id = parseInt(req.params.id);
+        console.log("Finding product with ID: " + id);
         // create Request object
         new sql.Request()    
         .input("prodId", sqlInstance.Int, id)
@@ -51,10 +56,11 @@ app.get('/:id', function (req, res) {
         .then(function (prod) {
             if (prod == null || prod.length === 0){
                 console.log ("no product exists for product id " + id);
+                res.status(404).send("Not Found");
                 return;
             }
                 
-            
+            console.log(recordSet);
             res.send(recordset);
         })
         .catch(function (error) {
@@ -119,21 +125,14 @@ var server = app.listen(port, function () {
 
 function GetSqlConnectionConfig() {
     var fs = require('fs');
-    console.log(process.env);
+
     path = '/etc/kvmnt';
-    console.log('loading secrets from key-vault....');
     var username = fs.readFileSync(path + '/username', "utf8");
-    console.log('username: ' + username);
     var dbhost = fs.readFileSync(path + '/dbhost', "utf8");
-    console.log('dbhost: ' + dbhost);
     var dbname = fs.readFileSync(path + '/dbname', "utf8");
-    console.log('dbname: ' + dbname);
     var pwd = fs.readFileSync(path + '/password', "utf8");
-    console.log('pwd: ' + pwd);
     var dbport = parseInt(fs.readFileSync(path + '/dbport', "utf8"));
-    console.log('dbport: ' + dbport);
     var encryptConnection = (fs.readFileSync(path + '/encrypt', "utf8") === 'true');
-    console.log('encrypt: ' + encryptConnection);
     // config for your database
     var config = {
         user: username,
