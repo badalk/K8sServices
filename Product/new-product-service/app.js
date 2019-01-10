@@ -73,8 +73,8 @@ app.get('/save', function (req, res){
     var config = GetSqlConnectionConfig();
     sql.close();
    
-    var dbConn = new sql.Connection(config);
-    dbConn.connect(config, function (err) {
+    //var dbConn = new sql.Connection(config);
+    sql.connect(config, function (err) {
         var transaction = new sql.Transaction(dbConn);
         transaction.begin().then(function () {
             var requst = new sqlInstance.Request()
