@@ -44,7 +44,6 @@ app.get('/:id', function (req, res) {
         if (err) {
             console.log("error connecting to database: " + err);
             res.status(500).send(err);
-            return;
         }
         new sqlInstance.Request()
         const id = parseInt(req.params.id);
@@ -57,7 +56,6 @@ app.get('/:id', function (req, res) {
             if (prod == null || prod.length === 0){
                 console.log ("no product exists for product id " + id);
                 res.status(404).send("Not Found");
-                return;
             }
                 
             console.log(recordSet);
@@ -141,7 +139,7 @@ function GetSqlConnectionConfig() {
         database: dbname,
         port: dbport,
         options: {
-            encrypt: encryptConnection,
+            encrypt: encryptConnection
         }
     };
     return config;
