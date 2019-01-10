@@ -2,77 +2,15 @@ var express = require('express'),
     app = express(),
     port = process.env.PORT || 80
 
+app.get('/healthz', function(req,res) {
+    res.status(200).send('OK');
+});
+
 app.get('/', function (req, res) {
    
     var sql = require("mssql");
 
-    var fs = require('fs');
- 
-    // var path = '/etc/sqlsecrets/db'
-
-    // //************************************* */
-    // //*********** READING SECRETS FROM MOUNTED VOLUME ****************** */
-    // //************************************* */
-    // fs.readdir(path, function(err, items) {
-    //     console.log(items);
-     
-    //     for (var i=0; i<items.length; i++) {
-    //         var file = path + '/' + items[i];
-    //         //console.log('processing ' + file);
-    //         try{
-    //             var stats = fs.lstatSync(file) 
-
-    //             //console.log('stats:::');
-    //             //console.log(stats);
-    //             //console.log('with fs.stat: ' + file + ' is a directory? ' + stats.isDirectory());
-    //             if (!stats.isDirectory()){
-    //                 var contents = fs.readFileSync(file, 'utf8');
-    //                 console.log('secret contents of ' + file + ': ' + contents);
-    //             }
-    //             else{
-    //                 console.log(file + ' is a directory');
-    //             }
-                
-    //         }
-    //         catch(e){
-    //             console.log(e)
-    //         }
-    //     }
-    // });
-
-    //************************************* */
-    //*********** READING SECRETS FROM Environment Variables VOLUME ****************** */
-    //************************************* */
-    console.log(process.env);
-
-    path = '/etc/kvmnt';
-    console.log('loading secrets from key-vault....');
-    var username = fs.readFileSync(path + '/username', "utf8");
-    console.log('username: ' + username);
-    var dbhost = fs.readFileSync(path + '/dbhost', "utf8");
-    console.log('dbhost: ' + dbhost);
-    var dbname = fs.readFileSync(path + '/dbname', "utf8");
-    console.log('dbname: ' + dbname);
-    var pwd = fs.readFileSync(path + '/password', "utf8");
-    console.log('pwd: ' + pwd);
-    var dbport = parseInt(fs.readFileSync(path + '/dbport', "utf8"));
-    console.log('dbport: ' + dbport);
-    var encryptConnection = (fs.readFileSync(path + '/encrypt', "utf8") === 'true');
-    console.log('encrypt: ' + encryptConnection);
-
-
-
-    // config for your database
-    var config = {
-        user: username,
-        password: pwd,
-        server: dbhost,
-        database: dbname,
-        port: dbport,
-        options: {
-            encrypt: encryptConnection,
-        }
-    };
+    var config = GetSqlConnectionConfig();
 
     console.log (config);
 
@@ -97,6 +35,116 @@ app.get('/', function (req, res) {
     });
 });
 
+app.get('/:id', function (req, res) {
+    var sql = require("mssql");
+
+    var config = GetSqlConnectionConfig();
+    sql.close();
+   
+    sql.connect(config, function (err) {
+        new sqlInstance.Request()
+        const id = parseInt(req.params.id);
+        // create Request object
+        new sql.Request()    
+        .input("prodId", sqlInstance.Int, id)
+        .query("select * from [dbo].[Product] where ProductID = @prodId")
+        .then(function (prod) {
+            if (prod == null || prod.length === 0){
+                console.log ("no product exists for product id " + id);
+                return;
+            }
+                
+            
+            res.send(recordset);
+        })
+        .catch(function (error) {
+            console.log("Error retrieving product for product id " + id + ": " + error);
+        })
+    });
+});
+
+app.get('/save', function (req, res){
+    var sql = require("mssql");
+
+    var config = GetSqlConnectionConfig();
+    sql.close();
+   
+    var dbConn = new sql.Connection(config);
+    dbConn.connect(config, function (err) {
+        var transaction = new sql.Transaction(dbConn);
+        transaction.begin().then(function () {
+            var requst = new sqlInstance.Request()
+            const product = req.body;
+            // create Request object
+             
+            requst.query("INESRT INTO [dbo].[Product] (Name, Price) VALUES ('" + product.name + "', " + product.price + ")")
+            .then(function (prod) {
+                transaction.commit().then(function (recordSet) {
+                    console.log("Product " + product.name + " is added with details: " + recordSet);
+                    dbConn.close();
+                }).catch(function (err) {
+                    console.log("Error in Transaction Commit " + err);
+                    dbConn.close();
+                });
+            })
+            .catch(function (error) {
+                console.log(error);
+                dbConn.close();
+            })
+        })
+        .catch(function(error){
+            console.log(error);
+            dbConn.close();
+        })
+    });
+});
+
+app.get('/delete/:id', function (req, res){
+    var sql = require("mssql");
+
+    var config = GetSqlConnectionConfig();
+    sql.close();
+
+    const id = parseInt(req.params.id);
+
+    Console.log("Deleting product " + id)
+   
+    //NOT IMPLEMENTED
+
+});
+
 var server = app.listen(port, function () {
     console.log('New Product Service is running..');
 });
+
+function GetSqlConnectionConfig() {
+    var fs = require('fs');
+    console.log(process.env);
+    path = '/etc/kvmnt';
+    console.log('loading secrets from key-vault....');
+    var username = fs.readFileSync(path + '/username', "utf8");
+    console.log('username: ' + username);
+    var dbhost = fs.readFileSync(path + '/dbhost', "utf8");
+    console.log('dbhost: ' + dbhost);
+    var dbname = fs.readFileSync(path + '/dbname', "utf8");
+    console.log('dbname: ' + dbname);
+    var pwd = fs.readFileSync(path + '/password', "utf8");
+    console.log('pwd: ' + pwd);
+    var dbport = parseInt(fs.readFileSync(path + '/dbport', "utf8"));
+    console.log('dbport: ' + dbport);
+    var encryptConnection = (fs.readFileSync(path + '/encrypt', "utf8") === 'true');
+    console.log('encrypt: ' + encryptConnection);
+    // config for your database
+    var config = {
+        user: username,
+        password: pwd,
+        server: dbhost,
+        database: dbname,
+        port: dbport,
+        options: {
+            encrypt: encryptConnection,
+        }
+    };
+    return config;
+}
+
