@@ -45,12 +45,11 @@ app.get('/:id', function (req, res) {
             console.log("error connecting to database: " + err);
             res.status(500).send(err);
         }
-        new sqlInstance.Request()
         const id = parseInt(req.params.id);
         console.log("Finding product with ID: " + id);
         // create Request object
         new sql.Request()    
-        .input("prodId", sqlInstance.Int, id)
+        .input("prodId", sql.Int, id)
         .query("select * from [dbo].[Product] where ProductID = @prodId")
         .then(function (prod) {
             if (prod == null || prod.length === 0){
