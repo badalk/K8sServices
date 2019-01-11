@@ -61,8 +61,8 @@ app.get('/:id', function (req, res) {
                 res.status(404).send("Not Found");
             }
                 
-            console.log(recordSet);
-            res.send(recordset);
+            console.log(prod);
+            res.send(prod);
         })
         .catch(function (error) {
             console.log("Error retrieving product for product id " + prodId + ": " + error);
