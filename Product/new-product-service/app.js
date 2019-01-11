@@ -35,9 +35,10 @@ app.get('/', function (req, res) {
 
 app.get('/:id', function (req, res) {
 
+    console.log(req.params);
     const prodId = parseInt(req.params.id);
     console.log("product Id: " + prodId);
-    
+    console.log(req.params);
     var sql = require("mssql");
     console.log("Getting product details");
 
