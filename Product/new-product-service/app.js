@@ -56,13 +56,14 @@ app.get('/:id', function (req, res) {
         .input("productId", sql.Int, prodId)
         .query("select * from [dbo].[Product] where ProductID = @productId")
         .then(function (prod) {
-            if (prod == null || prod.length === 0){
+            if (prod == null || prod.recordsets.length === 0){
                 console.log ("no product exists for product id " + prodId);
                 res.status(404).send("Not Found");
             }
-                
-            console.log(prod);
-            res.send(prod);
+            else {
+                console.log(prod);
+                res.send(prod);
+            }
         })
         .catch(function (error) {
             console.log("Error retrieving product for product id " + prodId + ": " + error);
@@ -78,30 +79,28 @@ app.get('/save', function (req, res){
    
     //var dbConn = new sql.Connection(config);
     sql.connect(config, function (err) {
-        var transaction = new sql.Transaction(dbConn);
+        var transaction = new sql.Transaction();
         transaction.begin().then(function () {
-            var requst = new sqlInstance.Request()
+            var requst = new sql.Request()
             const product = req.body;
             // create Request object
+            console.log("product: " + product)
              
             requst.query("INESRT INTO [dbo].[Product] (Name, Price) VALUES ('" + product.name + "', " + product.price + ")")
             .then(function (prod) {
+                console.log("product post insert: " + prod)
                 transaction.commit().then(function (recordSet) {
                     console.log("Product " + product.name + " is added with details: " + recordSet);
-                    dbConn.close();
                 }).catch(function (err) {
                     console.log("Error in Transaction Commit " + err);
-                    dbConn.close();
                 });
             })
             .catch(function (error) {
                 console.log(error);
-                dbConn.close();
             })
         })
         .catch(function(error){
             console.log(error);
-            dbConn.close();
         })
     });
 });
