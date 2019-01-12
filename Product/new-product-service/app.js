@@ -1,9 +1,9 @@
 var express = require('express'),
-    // bodyParser = require('body-parser'),
+    bodyParser = require('body-parser'),
     app = express(),
     port = process.env.PORT || 80
 
-// app.use(bodyParser.json);
+app.use(bodyParser.json);
 
 app.get('/healthz', function(req,res) {
     res.status(200).send('OK');
