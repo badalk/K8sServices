@@ -71,7 +71,7 @@ app.get('/:id', function (req, res) {
     });
 });
 
-app.get('/save', function (req, res){
+app.post('/save', function (req, res){
     var sql = require("mssql");
 
     var config = GetSqlConnectionConfig();
