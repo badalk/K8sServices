@@ -3,6 +3,7 @@ var express = require('express'),
     app = express(),
     port = process.env.PORT || 80
 
+app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
 app.get('/healthz', function(req,res) {
