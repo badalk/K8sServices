@@ -3,10 +3,10 @@ var express = require('express'),
     app = express(),
     port = process.env.PORT || 80
 
-app.use(bodyParser.json);
+app.use(bodyParser.json());
 
 app.get('/healthz', function(req,res) {
-    res.status(200).send('OK');
+    res.status(200).send();
 });
 
 app.get('/', function (req, res) {
