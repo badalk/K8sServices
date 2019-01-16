@@ -1,0 +1,24 @@
+kind: Role
+apiVersion: rbac.authorization.k8s.io/v1
+metadata:
+  name: product-service-admins
+  namespace: product
+rules:
+- apiGroups: [""]
+  resources: ["pods", "logs", "secretes", "services", "deployments"]
+  verbs: ["get", "list", "create", "update", "delete", "patch", "logs", "proxy", "watch", "redirect"]
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+ name: myfirstakscluster-product-service-admins
+ namespace: product
+roleRef:
+ apiGroup: rbac.authorization.k8s.io
+ kind: Role
+ name: product-service-admins
+subjects:
+- apiGroup: rbac.authorization.k8s.io
+  kind: Group
+  # "AD Group Product-Service-Admins"
+  name: "0262d19e-4f7d-4358-bfbd-3ba5b28c915c"
