@@ -109,24 +109,27 @@ app.post('/save', function (req, res){
 
             requst.query(query)
             .then(function (prod) {
-                console.log("product post insert: " + prod)
-                transaction.commit().then(function (recordSet) {
-                    console.log("Product " + product.name + " is added with details: " + recordSet);
+                console.log("product post insert: " + JSON.stringify(prod))
+                transaction.commit().then(function () {
+                    console.log("Product " + prod.Name + " is added with ID: " + prod.ProductID);
+                    res.send(prod.ProductID);
                 }).catch(function (err) {
                     console.log("Error in Transaction Commit " + err);
                 });
             })
             .catch(function (error) {
                 console.log(error);
+                res.status(500).send();
             })
         })
         .catch(function(error){
             console.log(error);
+            res.status(500).send();
         })
     });
 });
 
-app.get('/delete/:id', function (req, res){
+app.post('/delete', function (req, res){
     var sql = require("mssql");
 
     var config = GetSqlConnectionConfig();
