@@ -1,10 +1,11 @@
 var express = require('express'),
     app = express(),
-    port = process.env.PORT || 80,
-    bodyParser = require('body-parser');
+    fs = require('fs');
+    port = process.env.PORT || 80;
+    // bodyParser = require('body-parser');
 
 
-app.use(bodyParser.json());
+// app.use(bodyParser.json());
 
 //CORS Middleware
 app.use(function (req, res, next) {
@@ -84,60 +85,60 @@ app.get('/:id', function (req, res) {
     });
 });
 
-app.post('/save', function (req, res){
-    var sql = require("mssql");
+// app.post('/save', function (req, res){
+//     var sql = require("mssql");
 
-    var config = GetSqlConnectionConfig();
-    sql.close();
+//     var config = GetSqlConnectionConfig();
+//     sql.close();
    
-    //var dbConn = new sql.Connection(config);
-    sql.connect(config, function (err) {
-        var transaction = new sql.Transaction();
-        transaction.begin().then(function () {
-            var requst = new sql.Request()
-            const product = req.body;
-            // create Request object
-            console.log("product: " + product)
+//     //var dbConn = new sql.Connection(config);
+//     sql.connect(config, function (err) {
+//         var transaction = new sql.Transaction();
+//         transaction.begin().then(function () {
+//             var requst = new sql.Request()
+//             const product = req.body;
+//             // create Request object
+//             console.log("product: " + product)
              
-            requst.query("INESRT INTO [dbo].[Product] (Name, Price) VALUES ('" + product.name + "', " + product.price + ")")
-            .then(function (prod) {
-                console.log("product post insert: " + prod)
-                transaction.commit().then(function (recordSet) {
-                    console.log("Product " + product.name + " is added with details: " + recordSet);
-                }).catch(function (err) {
-                    console.log("Error in Transaction Commit " + err);
-                });
-            })
-            .catch(function (error) {
-                console.log(error);
-            })
-        })
-        .catch(function(error){
-            console.log(error);
-        })
-    });
-});
+//             requst.query("INESRT INTO [dbo].[Product] (Name, Price) VALUES ('" + product.name + "', " + product.price + ")")
+//             .then(function (prod) {
+//                 console.log("product post insert: " + prod)
+//                 transaction.commit().then(function (recordSet) {
+//                     console.log("Product " + product.name + " is added with details: " + recordSet);
+//                 }).catch(function (err) {
+//                     console.log("Error in Transaction Commit " + err);
+//                 });
+//             })
+//             .catch(function (error) {
+//                 console.log(error);
+//             })
+//         })
+//         .catch(function(error){
+//             console.log(error);
+//         })
+//     });
+// });
 
-app.get('/delete/:id', function (req, res){
-    var sql = require("mssql");
+// app.get('/delete/:id', function (req, res){
+//     var sql = require("mssql");
 
-    var config = GetSqlConnectionConfig();
-    sql.close();
+//     var config = GetSqlConnectionConfig();
+//     sql.close();
 
-    const id = parseInt(req.params.id);
+//     const id = parseInt(req.params.id);
 
-    Console.log("Deleting product " + id)
+//     Console.log("Deleting product " + id)
    
-    //NOT IMPLEMENTED
+//     //NOT IMPLEMENTED
 
-});
+// });
 
 var server = app.listen(port, function () {
     console.log('New Product Service is running..');
 });
 
 function GetSqlConnectionConfig() {
-    var fs = require('fs');
+    
 
     path = '/etc/kvmnt';
     var username = fs.readFileSync(path + '/username', "utf8");
@@ -158,5 +159,5 @@ function GetSqlConnectionConfig() {
         }
     };
     return config;
-}
+};
 
