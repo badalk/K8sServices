@@ -158,6 +158,8 @@ function GetSqlConnectionConfig() {
             encrypt: encryptConnection
         }
     };
+    console.log('returning config:');
+    console.log(config);
     return config;
 };
 
