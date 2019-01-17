@@ -107,8 +107,7 @@ app.post('/save', function (req, res){
             }
             console.log("Query: " + query);
 
-            requst.query(query)
-            .then(function (prod) {
+            requst.query(query, function (err, prod) {
                 console.log("product post insert: " + JSON.stringify(prod))
                 transaction.commit().then(function () {
                     console.log("Product " + prod.Name + " is added with ID: " + prod.ProductID);
