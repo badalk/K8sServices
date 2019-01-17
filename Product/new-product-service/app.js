@@ -99,8 +99,11 @@ app.post('/save', function (req, res){
             const product = req.body;
             // create Request object
             console.log("product: " + product)
-             
-            requst.query("INESRT INTO [dbo].[Product] (Name, Price) VALUES ('" + product.name + "', " + product.price + ")")
+
+            var query = "INESRT INTO [dbo].[Product] (Name, Price) VALUES ('" + product.name + "', " + product.price + ")"; 
+            console.log("Query: " + query);
+            
+            requst.query(query)
             .then(function (prod) {
                 console.log("product post insert: " + prod)
                 transaction.commit().then(function (recordSet) {
