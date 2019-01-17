@@ -98,11 +98,15 @@ app.post('/save', function (req, res){
             var requst = new sql.Request()
             const product = req.body;
             // create Request object
-            console.log("product: " + product)
-
-            var query = "INESRT INTO [dbo].[Product] (Name, Price) VALUES ('" + product.name + "', " + product.price + ")"; 
+            var query = "";
+            if (product.productId === undefined){
+                query = "INSERT INTO [dbo].[Product] (Name, Price) VALUES ('" + product.name + "', " + product.price + ")"; 
+            }
+            else{
+                query = "UPDATE [dbo].[Product] Set Name = '" + product.name + "', Price = " + product.price + " WHERE ProductID = " + product.productId; 
+            }
             console.log("Query: " + query);
-            
+
             requst.query(query)
             .then(function (prod) {
                 console.log("product post insert: " + prod)
