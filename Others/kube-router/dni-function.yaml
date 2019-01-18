@@ -35,7 +35,7 @@ metadata:
     kubernetes.io/ingress.class: addon-http-application-routing
 spec:
   rules:
-  - host: dni-function.[YOUR_DNS__ZONE_NAME]
+  - host: dni-function.fa8099db08164c778315.eastus2.aksapp.io
     http:
       paths:
       - backend:
