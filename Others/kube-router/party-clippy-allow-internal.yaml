@@ -1,0 +1,13 @@
+kind: NetworkPolicy
+apiVersion: networking.k8s.io/v1
+metadata:
+  name: party-clippy-allow-internal
+spec:
+  podSelector:
+    matchLabels:
+      app: party-clippy
+  ingress:
+  - from:
+      - podSelector:
+          matchLabels:
+            app: internal
