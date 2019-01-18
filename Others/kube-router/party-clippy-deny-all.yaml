@@ -2,7 +2,7 @@ kind: NetworkPolicy
 apiVersion: networking.k8s.io/v1
 metadata:
   name: party-clippy-deny-all
-  namespace: party-clippy-deny-all
+  namespace: party
 spec:
   podSelector:
     matchLabels:
