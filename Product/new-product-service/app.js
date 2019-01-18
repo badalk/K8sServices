@@ -123,7 +123,7 @@ app.post('/save', function (req, res){
         })
         .catch(function(error){
             console.log(error);
-            res.status(500).send();
+            res.status(500).send(error);
         })
     });
 });

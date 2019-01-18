@@ -1,18 +1,11 @@
-apiVersion: v1
-kind: Namespace
-metadata:
-  name: dni
----  
 apiVersion: apps/v1beta1
 kind: Deployment
 metadata:
   name: dni-function
-  namespace: dni
 spec:
   replicas: 1
   template:
     metadata:
-      namespace: dni
       labels:
         app: dni-function
     spec:
@@ -26,7 +19,6 @@ apiVersion: v1
 kind: Service
 metadata:
   name: dni-function
-  namespace: dni
 spec:
   type: ClusterIP
   ports:
@@ -39,12 +31,11 @@ apiVersion: extensions/v1beta1
 kind: Ingress
 metadata:
   name: dni-function
-  namespace: dni
   annotations:
     kubernetes.io/ingress.class: addon-http-application-routing
 spec:
   rules:
-  - host: dni-function.fa8099db08164c778315.eastus2.aksapp.io
+  - host: dni-function.[YOUR_DNS__ZONE_NAME]
     http:
       paths:
       - backend:
