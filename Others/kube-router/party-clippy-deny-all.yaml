@@ -4,6 +4,7 @@ metadata:
   namespace: party
   name: party-clippy-deny-all
 spec:
+  ipBlock:  
   podSelector:
     matchLabels:
       namespace: party
