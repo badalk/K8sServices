@@ -13,4 +13,4 @@ spec:
     - port: 443
   - from: 
     - ipBlock:
-      cidr: 40.70.128.221/31
+        cidr: 40.70.128.221/31
