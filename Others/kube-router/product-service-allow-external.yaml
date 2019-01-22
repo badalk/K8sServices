@@ -8,4 +8,9 @@ spec:
     matchLabels:
       app: new-product-service-kvflex
   ingress:
+  - ports:
+    - port: 80
+      name: web
+    - port: 443
+      name: secureweb    
   - from: []
