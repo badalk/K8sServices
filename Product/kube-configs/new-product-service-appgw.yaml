@@ -38,7 +38,7 @@ spec:
     spec:
       containers:
       - name: new-product-service-appgw
-        image: badalacr.azurecr.io/new-product-service-appgw:v1
+        image: badalacr.azurecr.io/new-product-service-kvflex:v1
         imagePullPolicy: Always
         volumeMounts:
         - name: test
