@@ -1,16 +1,35 @@
+# kind: NetworkPolicy
+# apiVersion: networking.k8s.io/v1
+# metadata:
+#   name: np-new-product-service-allow-appgw
+#   namespace: product
+# spec:
+#   podSelector:
+#     matchLabels:
+#       app: new-product-service-appgw
+#   ingress:
+#   - ports:
+#     - port: 80
+#     - port: 443
+#   - from: 
+#     - ipBlock:
+#         cidr: xxx.xxx.xxx.xxx/32 #App GW IP
+# ---
+# to allow communication from another pod in the same namespace with label app=internal
 kind: NetworkPolicy
 apiVersion: networking.k8s.io/v1
 metadata:
-  name: np-new-product-service-allow-appgw
+  name: np-new-product-service-allow-appgw-ns
   namespace: product
 spec:
   podSelector:
     matchLabels:
       app: new-product-service-appgw
   ingress:
-  - ports:
-    - port: 80
-    - port: 443
-  - from: 
-    - ipBlock:
-        cidr: xxx.xxx.xxx.xxx/32 #App GW IP
+    - from:
+      - namespaceSelector:     # chooses all pods in namespaces labelled with team=operations
+          matchLabels:
+            team: justanotherns  
+        podSelector:           # chooses pods with type=monitoring
+          matchLabels:
+            app: internal
