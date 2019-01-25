@@ -1,0 +1,73 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: new-product-service-internal
+  namespace: product
+  annotations:
+    service.beta.kubernetes.io/azure-load-balancer-internal: "true"
+spec:
+  type: ClusterIP
+  ports:
+  - name: tcp-80
+    port: 80
+    targetPort: http
+    protocol: TCP
+  - name: tcp-443
+    port: 443
+    targetPort: https
+    protocol: TCP
+  selector:
+    app: new-product-service-internal
+---
+apiVersion: apps/v1beta1
+kind: Deployment
+metadata:
+  name: new-product-service-internal
+  namespace: product
+spec:
+  replicas: 2
+  strategy:
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 1
+  minReadySeconds: 5
+  template:
+    metadata:
+      labels:
+        app: new-product-service-internal
+        aadpodidbinding: "prod-svc-pod"
+        namespace: product
+    spec:
+      containers:
+      - name: new-product-service-internal
+        image: badalacr.azurecr.io/new-product-service-internal:v1
+        imagePullPolicy: Always
+        volumeMounts:
+        - name: test
+          mountPath: /etc/kvmnt
+          readOnly: true
+        ports:
+        - name: http
+          containerPort: 80
+          protocol: TCP
+        - name: https
+          containerPort: 443
+          protocol:  TCP
+        resources:
+          requests:
+            cpu: 100m
+          limits:
+            cpu: 200m
+      volumes:
+      - name: test
+        flexVolume:
+          driver: "azure/kv"
+          options:
+            usepodidentity: "true"         # [OPTIONAL] if not provided, will default to "false"
+            keyvaultname: "aks-sp-key-secret-vault"               # the name of the KeyVault
+            keyvaultobjectnames: "dbhost;dbport;dbname;username;password;encrypt"        # list of KeyVault object names (semi-colon separated)
+            keyvaultobjecttypes: "secret;secret;secret;secret;secret;secret"    # list of KeyVault object types: secret, key or cert (semi-colon separated)
+            keyvaultobjectversions: "47b45e005d604f67ae759ceec89ddcf6;3c6c9c312de545328d5ccf0009693bee;500f70812a274a4180b1477d3208bd6a;8a11530b74094c918be7f349e8f5e5f5;fa52a58c52e54d6d847c09e5b5ab91b6;9c827b69280347d0aa2cc491d72e1679"     # [OPTIONAL] list of KeyVault object versions (semi-colon separated), will get latest if empty
+            resourcegroup: "rg-secrets"              # the resource group of the KeyVault
+            subscriptionid: "4dfeb08c-7e41-40af-a9fa-fabcac401c2d"             # the subscription ID of the KeyVault
+            tenantid: "b25fcb44-9c49-413c-9fdc-b59b39447b84"                   # the tenant ID of the KeyVault
