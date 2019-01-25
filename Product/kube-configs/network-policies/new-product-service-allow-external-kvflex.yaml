@@ -1,0 +1,16 @@
+kind: NetworkPolicy
+apiVersion: networking.k8s.io/v1
+metadata:
+  name: new-product-service-allow-external-kvflex
+  namespace: product
+spec:
+  podSelector:
+    matchLabels:
+      app: new-product-service-kvflex
+  ingress:
+  - ports:
+    - port: 80
+    - port: 443
+  - from: 
+    - ipBlock:
+        cidr: 40.70.245.213/32 #public IP of a LoadBalancer Service
